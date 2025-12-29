@@ -14,7 +14,7 @@ model User {
   email    String @unique
   password String
 
-  accessToken String? @db.Text
+  refreshToken String? @db.Text
 
   active    Boolean  @default(true)
   createdAt DateTime @default(now())

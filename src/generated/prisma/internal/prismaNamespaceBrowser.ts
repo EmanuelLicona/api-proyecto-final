@@ -51,9 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  JwtDenylist: 'JwtDenylist',
-  Configuration: 'Configuration'
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,35 +75,13 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  refreshToken: 'refreshToken',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-export const JwtDenylistScalarFieldEnum = {
-  jti: 'jti',
-  userId: 'userId',
-  expiresAt: 'expiresAt',
-  reason: 'reason',
-  createdAt: 'createdAt'
-} as const
-
-export type JwtDenylistScalarFieldEnum = (typeof JwtDenylistScalarFieldEnum)[keyof typeof JwtDenylistScalarFieldEnum]
-
-
-export const ConfigurationScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  value: 'value',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ConfigurationScalarFieldEnum = (typeof ConfigurationScalarFieldEnum)[keyof typeof ConfigurationScalarFieldEnum]
 
 
 export const SortOrder = {

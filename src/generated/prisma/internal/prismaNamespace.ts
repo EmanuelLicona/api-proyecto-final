@@ -384,9 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User',
-  JwtDenylist: 'JwtDenylist',
-  Configuration: 'Configuration'
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +400,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "jwtDenylist" | "configuration"
+    modelProps: "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -480,154 +478,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    JwtDenylist: {
-      payload: Prisma.$JwtDenylistPayload<ExtArgs>
-      fields: Prisma.JwtDenylistFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.JwtDenylistFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.JwtDenylistFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>
-        }
-        findFirst: {
-          args: Prisma.JwtDenylistFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.JwtDenylistFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>
-        }
-        findMany: {
-          args: Prisma.JwtDenylistFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>[]
-        }
-        create: {
-          args: Prisma.JwtDenylistCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>
-        }
-        createMany: {
-          args: Prisma.JwtDenylistCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.JwtDenylistCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>[]
-        }
-        delete: {
-          args: Prisma.JwtDenylistDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>
-        }
-        update: {
-          args: Prisma.JwtDenylistUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>
-        }
-        deleteMany: {
-          args: Prisma.JwtDenylistDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.JwtDenylistUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.JwtDenylistUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>[]
-        }
-        upsert: {
-          args: Prisma.JwtDenylistUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JwtDenylistPayload>
-        }
-        aggregate: {
-          args: Prisma.JwtDenylistAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateJwtDenylist>
-        }
-        groupBy: {
-          args: Prisma.JwtDenylistGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.JwtDenylistGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.JwtDenylistCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.JwtDenylistCountAggregateOutputType> | number
-        }
-      }
-    }
-    Configuration: {
-      payload: Prisma.$ConfigurationPayload<ExtArgs>
-      fields: Prisma.ConfigurationFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ConfigurationFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ConfigurationFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>
-        }
-        findFirst: {
-          args: Prisma.ConfigurationFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ConfigurationFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>
-        }
-        findMany: {
-          args: Prisma.ConfigurationFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>[]
-        }
-        create: {
-          args: Prisma.ConfigurationCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>
-        }
-        createMany: {
-          args: Prisma.ConfigurationCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ConfigurationCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>[]
-        }
-        delete: {
-          args: Prisma.ConfigurationDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>
-        }
-        update: {
-          args: Prisma.ConfigurationUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>
-        }
-        deleteMany: {
-          args: Prisma.ConfigurationDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ConfigurationUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ConfigurationUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>[]
-        }
-        upsert: {
-          args: Prisma.ConfigurationUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConfigurationPayload>
-        }
-        aggregate: {
-          args: Prisma.ConfigurationAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateConfiguration>
-        }
-        groupBy: {
-          args: Prisma.ConfigurationGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConfigurationGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ConfigurationCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConfigurationCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -672,35 +522,13 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  refreshToken: 'refreshToken',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-export const JwtDenylistScalarFieldEnum = {
-  jti: 'jti',
-  userId: 'userId',
-  expiresAt: 'expiresAt',
-  reason: 'reason',
-  createdAt: 'createdAt'
-} as const
-
-export type JwtDenylistScalarFieldEnum = (typeof JwtDenylistScalarFieldEnum)[keyof typeof JwtDenylistScalarFieldEnum]
-
-
-export const ConfigurationScalarFieldEnum = {
-  id: 'id',
-  key: 'key',
-  value: 'value',
-  active: 'active',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ConfigurationScalarFieldEnum = (typeof ConfigurationScalarFieldEnum)[keyof typeof ConfigurationScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -877,8 +705,6 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
-  jwtDenylist?: Prisma.JwtDenylistOmit
-  configuration?: Prisma.ConfigurationOmit
 }
 
 /* Types for Logging */
