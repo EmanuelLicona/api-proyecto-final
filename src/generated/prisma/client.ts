@@ -42,3 +42,13 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model JwtDenylist
+ * 
+ */
+export type JwtDenylist = Prisma.JwtDenylistModel
+/**
+ * Model Configuration
+ * 
+ */
+export type Configuration = Prisma.ConfigurationModel
