@@ -2,6 +2,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -13,7 +14,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  validate(payload: any) {
-    return { userId: payload.sub, email: payload.email }; // se agrega a la request
+  // ? Este metodo se invoca si el JWT no ha expirado y si la firma hace match con el payload.
+  validate(payload: JwtPayload) {
+    return {
+      ...payload,
+    }; // * Todo lo que retornemos se agregara a la Request
   }
 }
