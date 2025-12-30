@@ -13,6 +13,7 @@ import { SignInDto } from './dto/sign-in.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
+import { type JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -24,18 +25,17 @@ export class AuthController {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Post('refresh')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtRefreshAuthGuard)
-  async refresh(@CurrentUser() user) {
+  async refresh(@CurrentUser() user: JwtPayload) {
     return await this.authService.signInWithRefreshToken(user.userId);
   }
 
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@CurrentUser() user) {
-    return {
-      user,
-    };
+  getAuthProfile(@CurrentUser() user: JwtPayload) {
+    return this.authService.getProfileById(user.userId);
   }
 }

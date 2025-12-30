@@ -6,9 +6,11 @@ import {
 import { ConfigService } from '@nestjs/config';
 
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/interfaces/user.interface';
 import { UsersService } from 'src/users/users.service';
 
 import { PasswordHandler } from 'src/utils/password-handler';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -25,31 +27,8 @@ export class AuthService {
       throw new UnauthorizedException("Password doesn't match");
     }
 
-    const expirationMs = parseInt(
-      this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS'),
-    );
-
-    const refreshExpirationMs = parseInt(
-      this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS'),
-    );
-
-    const tokenPayload = {
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-    };
-
-    const accessToken = this.jwtService.sign(tokenPayload, {
-      secret: this.configService.getOrThrow('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: `${expirationMs}ms`,
-    });
-
-    const refreshToken = this.jwtService.sign(tokenPayload, {
-      secret: this.configService.getOrThrow('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: `${refreshExpirationMs}ms`,
-    });
-
-    await this.usersService.updateLastLogin(user.id, refreshToken);
+    const { accessToken, refreshToken, tokenPayload } =
+      await this.generateJwtAccessToken(user as User);
 
     return {
       user: tokenPayload,
@@ -62,31 +41,8 @@ export class AuthService {
     const user = await this.usersService.getUserById(userId);
     if (!user) throw new NotFoundException('User not found');
 
-    const expirationMs = parseInt(
-      this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION_MS'),
-    );
-
-    const refreshExpirationMs = parseInt(
-      this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION_MS'),
-    );
-
-    const tokenPayload = {
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-    };
-
-    const accessToken = this.jwtService.sign(tokenPayload, {
-      secret: this.configService.getOrThrow('JWT_ACCESS_TOKEN_SECRET'),
-      expiresIn: `${expirationMs}ms`,
-    });
-
-    const refreshToken = this.jwtService.sign(tokenPayload, {
-      secret: this.configService.getOrThrow('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: `${refreshExpirationMs}ms`,
-    });
-
-    await this.usersService.updateLastLogin(user.id, refreshToken);
+    const { accessToken, refreshToken, tokenPayload } =
+      await this.generateJwtAccessToken(user as User);
 
     return {
       user: tokenPayload,
@@ -105,7 +61,7 @@ export class AuthService {
       const refreshTokenMatches = user.refreshToken === refreshToken;
 
       if (!refreshTokenMatches) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException(' Refresh token is not valid');
       }
 
       return {
@@ -117,5 +73,56 @@ export class AuthService {
       console.error(error);
       throw new UnauthorizedException('Refresh token is not valid');
     }
+  }
+
+  async getProfileById(userId: string) {
+    const user = await this.usersService.getUserById(userId);
+    if (!user) throw new NotFoundException('User not found');
+
+    return {
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+    };
+  }
+
+  // =============================================================================
+  // Private methods
+  // =============================================================================
+  private async generateJwtAccessToken(user: User): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    tokenPayload: JwtPayload;
+  }> {
+    const expirationSeconds = parseInt(
+      this.configService.getOrThrow('JWT_ACCESS_TOKEN_EXPIRATION'),
+    );
+
+    const refreshExpirationSeconds = parseInt(
+      this.configService.getOrThrow('JWT_REFRESH_TOKEN_EXPIRATION'),
+    );
+
+    const tokenPayload: JwtPayload = {
+      userId: user.id,
+      name: user.name,
+    };
+
+    const accessToken = this.jwtService.sign(tokenPayload, {
+      secret: this.configService.getOrThrow('JWT_ACCESS_TOKEN_SECRET'),
+      expiresIn: `${expirationSeconds}s`,
+    });
+
+    const refreshToken = this.jwtService.sign(tokenPayload, {
+      secret: this.configService.getOrThrow('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: `${refreshExpirationSeconds}s`,
+    });
+
+    await this.usersService.updateLastLogin(user.id, refreshToken);
+
+    return {
+      tokenPayload,
+      accessToken,
+      refreshToken,
+    };
   }
 }
