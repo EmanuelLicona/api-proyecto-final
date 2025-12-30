@@ -51,7 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  CreditLine: 'CreditLine',
+  Product: 'Product',
+  Operation: 'Operation',
+  Installment: 'Installment',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,13 +80,95 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  avatarUrl: 'avatarUrl',
+  documentNumber: 'documentNumber',
+  phone: 'phone',
+  role: 'role',
   refreshToken: 'refreshToken',
-  active: 'active',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CreditLineScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  creditLimit: 'creditLimit',
+  interestRate: 'interestRate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CreditLineScalarFieldEnum = (typeof CreditLineScalarFieldEnum)[keyof typeof CreditLineScalarFieldEnum]
+
+
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  price: 'price',
+  baseRate: 'baseRate',
+  maxTerm: 'maxTerm',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const OperationScalarFieldEnum = {
+  id: 'id',
+  creditLineId: 'creditLineId',
+  productId: 'productId',
+  amount: 'amount',
+  interestRate: 'interestRate',
+  lateRate: 'lateRate',
+  term: 'term',
+  frequency: 'frequency',
+  status: 'status',
+  disbursedAt: 'disbursedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OperationScalarFieldEnum = (typeof OperationScalarFieldEnum)[keyof typeof OperationScalarFieldEnum]
+
+
+export const InstallmentScalarFieldEnum = {
+  id: 'id',
+  operationId: 'operationId',
+  number: 'number',
+  dueDate: 'dueDate',
+  amount: 'amount',
+  principal: 'principal',
+  interest: 'interest',
+  lateInterest: 'lateInterest',
+  status: 'status',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InstallmentScalarFieldEnum = (typeof InstallmentScalarFieldEnum)[keyof typeof InstallmentScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  installmentId: 'installmentId',
+  amount: 'amount',
+  method: 'method',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,16 +1,17 @@
 import {
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/users/interfaces/user.interface';
 import { UsersService } from 'src/users/users.service';
 
 import { PasswordHandler } from 'src/utils/password-handler';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { User } from 'src/generated/prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +29,7 @@ export class AuthService {
     }
 
     const { accessToken, refreshToken, tokenPayload } =
-      await this.generateJwtAccessToken(user as User);
+      await this.generateJwtAccessToken(user);
 
     return {
       user: tokenPayload,
@@ -42,7 +43,7 @@ export class AuthService {
     if (!user) throw new NotFoundException('User not found');
 
     const { accessToken, refreshToken, tokenPayload } =
-      await this.generateJwtAccessToken(user as User);
+      await this.generateJwtAccessToken(user);
 
     return {
       user: tokenPayload,
@@ -117,7 +118,14 @@ export class AuthService {
       expiresIn: `${refreshExpirationSeconds}s`,
     });
 
-    await this.usersService.updateLastLogin(user.id, refreshToken);
+    const userUpdate = await this.usersService.updateLastLogin(
+      user.id,
+      refreshToken,
+    );
+
+    if (!userUpdate) {
+      throw new InternalServerErrorException('Error updating last login');
+    }
 
     return {
       tokenPayload,

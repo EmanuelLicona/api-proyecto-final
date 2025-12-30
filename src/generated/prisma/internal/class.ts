@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.2.0",
   "engineVersion": "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id       String @id @default(uuid())\n  name     String\n  email    String @unique\n  password String\n\n  refreshToken String? @db.Text\n\n  active    Boolean  @default(true)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n/**\n * =====================\n * ENUMS\n * =====================\n */\n\nenum UserRole {\n  CUSTOMER\n}\n\nenum UserStatus {\n  ACTIVE\n  INACTIVE\n}\n\nenum CreditLineStatus {\n  ACTIVE\n  SUSPENDED\n  CLOSED\n}\n\nenum ProductStatus {\n  ACTIVE\n  INACTIVE\n}\n\nenum OperationStatus {\n  ACTIVE\n  PAID\n  DEFAULTED\n}\n\nenum InstallmentFrequency {\n  WEEKLY\n  BIWEEKLY\n  MONTHLY\n}\n\nenum InstallmentStatus {\n  PENDING\n  PAID\n  LATE\n}\n\nenum PaymentMethod {\n  CASH\n  TRANSFER\n  CARD\n}\n\n/**\n * =====================\n * MODELS\n * =====================\n */\n\nmodel User {\n  id       String @id @default(uuid())\n  name     String\n  email    String @unique\n  password String\n\n  avatarUrl      String?  @db.Text\n  documentNumber String?\n  phone          String?\n  role           UserRole @default(CUSTOMER)\n\n  refreshToken String? @db.Text\n\n  status UserStatus @default(ACTIVE)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  creditLines CreditLine[]\n}\n\nmodel CreditLine {\n  id String @id @default(uuid())\n\n  userId String\n  user   User   @relation(fields: [userId], references: [id])\n\n  creditLimit  Decimal @db.Decimal(14, 2) // limite maximo de credito\n  interestRate Decimal @db.Decimal(5, 2) // tasa base si el producto no lo especifica\n\n  status CreditLineStatus @default(ACTIVE)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  operations Operation[]\n}\n\nmodel Product {\n  id String @id @default(uuid())\n\n  name        String\n  description String?\n  imageUrl    String?\n  price       Decimal @db.Decimal(14, 2) // Precio de venta\n\n  baseRate Decimal @db.Decimal(5, 2) // Interes base del producto\n  maxTerm  Int // Maximo numero de cuotas\n\n  status ProductStatus @default(ACTIVE)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  operations Operation[]\n}\n\nmodel Operation {\n  id String @id @default(uuid())\n\n  creditLineId String\n  creditLine   CreditLine @relation(fields: [creditLineId], references: [id])\n\n  productId String\n  product   Product @relation(fields: [productId], references: [id])\n\n  amount       Decimal              @db.Decimal(14, 2) // Monto financiado \n  interestRate Decimal              @db.Decimal(5, 2) // Tasa aplicada a esta operacion\n  lateRate     Decimal              @db.Decimal(5, 2) // Interes de retraso por dia\n  term         Int // Numero de cuotas\n  frequency    InstallmentFrequency\n\n  status OperationStatus @default(ACTIVE)\n\n  disbursedAt DateTime // fecha que se financio el producto o entrego el dinero\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  installments Installment[]\n}\n\nmodel Installment {\n  id String @id @default(uuid())\n\n  operationId String\n  operation   Operation @relation(fields: [operationId], references: [id])\n\n  number       Int // numero de cuota de la operacion\n  dueDate      DateTime // fecha de vencimiento de la cuota\n  amount       Decimal  @db.Decimal(14, 2) // total a pagar en la cuota\n  principal    Decimal  @db.Decimal(14, 2) // parte que amortiza la cuota\n  interest     Decimal  @db.Decimal(14, 2) // parte que corresponde al interes\n  lateInterest Decimal  @default(0) @db.Decimal(14, 2)\n\n  status InstallmentStatus @default(PENDING)\n  paidAt DateTime?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  payments Payment[]\n\n  @@unique([operationId, number])\n}\n\nmodel Payment {\n  id String @id @default(uuid())\n\n  installmentId String\n  installment   Installment @relation(fields: [installmentId], references: [id])\n\n  amount Decimal       @db.Decimal(14, 2) // monto del pago\n  method PaymentMethod\n  paidAt DateTime\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatarUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"documentNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"UserStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"creditLines\",\"kind\":\"object\",\"type\":\"CreditLine\",\"relationName\":\"CreditLineToUser\"}],\"dbName\":null},\"CreditLine\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CreditLineToUser\"},{\"name\":\"creditLimit\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"interestRate\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"CreditLineStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"operations\",\"kind\":\"object\",\"type\":\"Operation\",\"relationName\":\"CreditLineToOperation\"}],\"dbName\":null},\"Product\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"baseRate\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"maxTerm\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ProductStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"operations\",\"kind\":\"object\",\"type\":\"Operation\",\"relationName\":\"OperationToProduct\"}],\"dbName\":null},\"Operation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creditLineId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creditLine\",\"kind\":\"object\",\"type\":\"CreditLine\",\"relationName\":\"CreditLineToOperation\"},{\"name\":\"productId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"product\",\"kind\":\"object\",\"type\":\"Product\",\"relationName\":\"OperationToProduct\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"interestRate\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"lateRate\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"term\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"frequency\",\"kind\":\"enum\",\"type\":\"InstallmentFrequency\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"OperationStatus\"},{\"name\":\"disbursedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"installments\",\"kind\":\"object\",\"type\":\"Installment\",\"relationName\":\"InstallmentToOperation\"}],\"dbName\":null},\"Installment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"operationId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"operation\",\"kind\":\"object\",\"type\":\"Operation\",\"relationName\":\"InstallmentToOperation\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dueDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"principal\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"interest\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"lateInterest\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"InstallmentStatus\"},{\"name\":\"paidAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"payments\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"InstallmentToPayment\"}],\"dbName\":null},\"Payment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"installmentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"installment\",\"kind\":\"object\",\"type\":\"Installment\",\"relationName\":\"InstallmentToPayment\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"method\",\"kind\":\"enum\",\"type\":\"PaymentMethod\"},{\"name\":\"paidAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -183,6 +183,56 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.creditLine`: Exposes CRUD operations for the **CreditLine** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CreditLines
+    * const creditLines = await prisma.creditLine.findMany()
+    * ```
+    */
+  get creditLine(): Prisma.CreditLineDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.product`: Exposes CRUD operations for the **Product** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Products
+    * const products = await prisma.product.findMany()
+    * ```
+    */
+  get product(): Prisma.ProductDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.operation`: Exposes CRUD operations for the **Operation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Operations
+    * const operations = await prisma.operation.findMany()
+    * ```
+    */
+  get operation(): Prisma.OperationDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.installment`: Exposes CRUD operations for the **Installment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Installments
+    * const installments = await prisma.installment.findMany()
+    * ```
+    */
+  get installment(): Prisma.InstallmentDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Payments
+    * const payments = await prisma.payment.findMany()
+    * ```
+    */
+  get payment(): Prisma.PaymentDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

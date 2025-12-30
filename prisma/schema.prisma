@@ -8,15 +8,178 @@ datasource db {
   provider = "postgresql"
 }
 
+/**
+ * =====================
+ * ENUMS
+ * =====================
+ */
+
+enum UserRole {
+  CUSTOMER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum CreditLineStatus {
+  ACTIVE
+  SUSPENDED
+  CLOSED
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum OperationStatus {
+  ACTIVE
+  PAID
+  DEFAULTED
+}
+
+enum InstallmentFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum InstallmentStatus {
+  PENDING
+  PAID
+  LATE
+}
+
+enum PaymentMethod {
+  CASH
+  TRANSFER
+  CARD
+}
+
+/**
+ * =====================
+ * MODELS
+ * =====================
+ */
+
 model User {
   id       String @id @default(uuid())
   name     String
   email    String @unique
   password String
 
+  avatarUrl      String?  @db.Text
+  documentNumber String?
+  phone          String?
+  role           UserRole @default(CUSTOMER)
+
   refreshToken String? @db.Text
 
-  active    Boolean  @default(true)
+  status UserStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creditLines CreditLine[]
+}
+
+model CreditLine {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  creditLimit  Decimal @db.Decimal(14, 2) // limite maximo de credito
+  interestRate Decimal @db.Decimal(5, 2) // tasa base si el producto no lo especifica
+
+  status CreditLineStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  operations Operation[]
+}
+
+model Product {
+  id String @id @default(uuid())
+
+  name        String
+  description String?
+  imageUrl    String?
+  price       Decimal @db.Decimal(14, 2) // Precio de venta
+
+  baseRate Decimal @db.Decimal(5, 2) // Interes base del producto
+  maxTerm  Int // Maximo numero de cuotas
+
+  status ProductStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  operations Operation[]
+}
+
+model Operation {
+  id String @id @default(uuid())
+
+  creditLineId String
+  creditLine   CreditLine @relation(fields: [creditLineId], references: [id])
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  amount       Decimal              @db.Decimal(14, 2) // Monto financiado 
+  interestRate Decimal              @db.Decimal(5, 2) // Tasa aplicada a esta operacion
+  lateRate     Decimal              @db.Decimal(5, 2) // Interes de retraso por dia
+  term         Int // Numero de cuotas
+  frequency    InstallmentFrequency
+
+  status OperationStatus @default(ACTIVE)
+
+  disbursedAt DateTime // fecha que se financio el producto o entrego el dinero
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  installments Installment[]
+}
+
+model Installment {
+  id String @id @default(uuid())
+
+  operationId String
+  operation   Operation @relation(fields: [operationId], references: [id])
+
+  number       Int // numero de cuota de la operacion
+  dueDate      DateTime // fecha de vencimiento de la cuota
+  amount       Decimal  @db.Decimal(14, 2) // total a pagar en la cuota
+  principal    Decimal  @db.Decimal(14, 2) // parte que amortiza la cuota
+  interest     Decimal  @db.Decimal(14, 2) // parte que corresponde al interes
+  lateInterest Decimal  @default(0) @db.Decimal(14, 2)
+
+  status InstallmentStatus @default(PENDING)
+  paidAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  payments Payment[]
+
+  @@unique([operationId, number])
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  installmentId String
+  installment   Installment @relation(fields: [installmentId], references: [id])
+
+  amount Decimal       @db.Decimal(14, 2) // monto del pago
+  method PaymentMethod
+  paidAt DateTime
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
