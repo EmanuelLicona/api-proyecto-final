@@ -91,8 +91,8 @@ model CreditLine {
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  creditLimit  Decimal @db.Decimal(14, 2) // limite maximo de credito
-  interestRate Decimal @db.Decimal(5, 2) // tasa base si el producto no lo especifica
+  creditLimit  Decimal @db.Decimal(14, 2) // límite máximo de crédito
+  interestRate Decimal @db.Decimal(5, 2) // tasa base si los productos no lo especifican
 
   status CreditLineStatus @default(ACTIVE)
 
@@ -108,17 +108,19 @@ model Product {
   name        String
   description String?
   imageUrl    String?
-  price       Decimal @db.Decimal(14, 2) // Precio de venta
+  brand       String
+  price       Decimal @db.Decimal(14, 2) // precio de venta
 
-  baseRate Decimal @db.Decimal(5, 2) // Interes base del producto
-  maxTerm  Int // Maximo numero de cuotas
+  baseRate Decimal @db.Decimal(5, 2) // interés base del producto
+  maxTerm  Int // máximo número de cuotas
 
   status ProductStatus @default(ACTIVE)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  operations Operation[]
+  operationProducts   OperationProduct[]
+  installmentProducts InstallmentProduct[]
 }
 
 model Operation {
@@ -127,23 +129,34 @@ model Operation {
   creditLineId String
   creditLine   CreditLine @relation(fields: [creditLineId], references: [id])
 
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
-
-  amount       Decimal              @db.Decimal(14, 2) // Monto financiado 
-  interestRate Decimal              @db.Decimal(5, 2) // Tasa aplicada a esta operacion
-  lateRate     Decimal              @db.Decimal(5, 2) // Interes de retraso por dia
-  term         Int // Numero de cuotas
+  amount       Decimal              @db.Decimal(14, 2) // monto total de la operación (sumatoria de productos)
+  interestRate Decimal              @db.Decimal(5, 2) // tasa promedio ponderada de la operación
+  lateRate     Decimal              @db.Decimal(5, 2) // interés diario por mora
+  term         Int // número de cuotas
   frequency    InstallmentFrequency
 
   status OperationStatus @default(ACTIVE)
 
-  disbursedAt DateTime // fecha que se financio el producto o entrego el dinero
+  disbursedAt DateTime // fecha de entrega de dinero
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  installments Installment[]
+  installments      Installment[]
+  operationProducts OperationProduct[]
+}
+
+model OperationProduct {
+  operationId String
+  operation   Operation @relation(fields: [operationId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  amount       Decimal @db.Decimal(14, 2) // monto específico de este producto
+  interestRate Decimal @db.Decimal(5, 2) // tasa de interés específica
+
+  @@id([operationId, productId])
 }
 
 model Installment {
@@ -152,11 +165,11 @@ model Installment {
   operationId String
   operation   Operation @relation(fields: [operationId], references: [id])
 
-  number       Int // numero de cuota de la operacion
-  dueDate      DateTime // fecha de vencimiento de la cuota
-  amount       Decimal  @db.Decimal(14, 2) // total a pagar en la cuota
-  principal    Decimal  @db.Decimal(14, 2) // parte que amortiza la cuota
-  interest     Decimal  @db.Decimal(14, 2) // parte que corresponde al interes
+  number       Int // número de cuota en la operación
+  dueDate      DateTime // fecha de vencimiento
+  amount       Decimal  @db.Decimal(14, 2) // total de la cuota (suma de productos)
+  principal    Decimal  @db.Decimal(14, 2) // amortización de capital
+  interest     Decimal  @db.Decimal(14, 2) // interés
   lateInterest Decimal  @default(0) @db.Decimal(14, 2)
 
   status InstallmentStatus @default(PENDING)
@@ -165,9 +178,23 @@ model Installment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  payments Payment[]
+  payments            Payment[]
+  installmentProducts InstallmentProduct[]
 
   @@unique([operationId, number])
+}
+
+model InstallmentProduct {
+  installmentId String
+  installment   Installment @relation(fields: [installmentId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  principal Decimal @db.Decimal(14, 2)
+  interest  Decimal @db.Decimal(14, 2)
+
+  @@id([installmentId, productId])
 }
 
 model Payment {

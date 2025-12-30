@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -12,6 +13,9 @@ import { UsersService } from 'src/users/users.service';
 import { PasswordHandler } from 'src/utils/password-handler';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { User } from 'src/generated/prisma/client';
+import { SignUpDto } from './dto/sign-up.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { ImageService } from 'src/storage/services/image.service';
 
 @Injectable()
 export class AuthService {
@@ -19,13 +23,41 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly imageService: ImageService,
   ) {}
-  async signIn(email: string, pass: string): Promise<any> {
+  async signIn(email: string, pass: string) {
     const user = await this.usersService.getUserByEmail(email);
     if (!user) throw new NotFoundException('User not found');
 
     if (!PasswordHandler.verifyPassword(pass, user.password)) {
       throw new UnauthorizedException("Password doesn't match");
+    }
+
+    const { accessToken, refreshToken, tokenPayload } =
+      await this.generateJwtAccessToken(user);
+
+    return {
+      user: tokenPayload,
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async signUp(signUpDto: SignUpDto) {
+    if (await this.usersService.getUserByEmail(signUpDto.email)) {
+      throw new BadRequestException('Email already exists');
+    }
+
+    const user = await this.usersService.createUser({
+      name: signUpDto.name,
+      email: signUpDto.email,
+      password: PasswordHandler.hashPassword(signUpDto.password),
+      documentNumber: signUpDto.documentNumber,
+      phone: signUpDto.phone,
+    });
+
+    if (!user) {
+      throw new InternalServerErrorException('Error creating user');
     }
 
     const { accessToken, refreshToken, tokenPayload } =
@@ -87,6 +119,35 @@ export class AuthService {
     };
   }
 
+  async updateProfile(
+    userId: string,
+    updateProfileDto: UpdateProfileDto,
+    image?: Express.Multer.File,
+  ) {
+    const user = await this.usersService.getUserById(userId);
+    if (!user) throw new NotFoundException('User not found');
+
+    let fileUrl = `${user.avatarUrl}`;
+    if (image) {
+      const oldKey = user.avatarUrl
+        ? this.getKeyFromUrl(user.avatarUrl)
+        : undefined;
+      fileUrl = await this.imageService.uploadAvatar(image, oldKey);
+    }
+
+    const updatedUser = await this.usersService.updateUser(
+      {
+        ...updateProfileDto,
+        avatarUrl: fileUrl,
+      },
+      userId,
+    );
+
+    if (!updatedUser) {
+      throw new InternalServerErrorException('Error updating user');
+    }
+  }
+
   // =============================================================================
   // Private methods
   // =============================================================================
@@ -132,5 +193,10 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
+  }
+
+  private getKeyFromUrl(url: string): string {
+    const parts = url.split('/');
+    return parts.slice(3).join('/');
   }
 }

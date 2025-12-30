@@ -9,6 +9,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { OperationsModule } from './operations/operations.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { APP_GUARD } from '@nestjs/core';
 
     AuthModule,
     UsersModule,
+    OperationsModule,
+    StorageModule,
   ],
   providers: [
     {

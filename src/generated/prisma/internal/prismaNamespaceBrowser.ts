@@ -55,7 +55,9 @@ export const ModelName = {
   CreditLine: 'CreditLine',
   Product: 'Product',
   Operation: 'Operation',
+  OperationProduct: 'OperationProduct',
   Installment: 'Installment',
+  InstallmentProduct: 'InstallmentProduct',
   Payment: 'Payment'
 } as const
 
@@ -111,6 +113,7 @@ export const ProductScalarFieldEnum = {
   name: 'name',
   description: 'description',
   imageUrl: 'imageUrl',
+  brand: 'brand',
   price: 'price',
   baseRate: 'baseRate',
   maxTerm: 'maxTerm',
@@ -125,7 +128,6 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 export const OperationScalarFieldEnum = {
   id: 'id',
   creditLineId: 'creditLineId',
-  productId: 'productId',
   amount: 'amount',
   interestRate: 'interestRate',
   lateRate: 'lateRate',
@@ -138,6 +140,16 @@ export const OperationScalarFieldEnum = {
 } as const
 
 export type OperationScalarFieldEnum = (typeof OperationScalarFieldEnum)[keyof typeof OperationScalarFieldEnum]
+
+
+export const OperationProductScalarFieldEnum = {
+  operationId: 'operationId',
+  productId: 'productId',
+  amount: 'amount',
+  interestRate: 'interestRate'
+} as const
+
+export type OperationProductScalarFieldEnum = (typeof OperationProductScalarFieldEnum)[keyof typeof OperationProductScalarFieldEnum]
 
 
 export const InstallmentScalarFieldEnum = {
@@ -156,6 +168,16 @@ export const InstallmentScalarFieldEnum = {
 } as const
 
 export type InstallmentScalarFieldEnum = (typeof InstallmentScalarFieldEnum)[keyof typeof InstallmentScalarFieldEnum]
+
+
+export const InstallmentProductScalarFieldEnum = {
+  installmentId: 'installmentId',
+  productId: 'productId',
+  principal: 'principal',
+  interest: 'interest'
+} as const
+
+export type InstallmentProductScalarFieldEnum = (typeof InstallmentProductScalarFieldEnum)[keyof typeof InstallmentProductScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {

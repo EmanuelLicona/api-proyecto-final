@@ -43,7 +43,6 @@ export type OperationSumAggregateOutputType = {
 export type OperationMinAggregateOutputType = {
   id: string | null
   creditLineId: string | null
-  productId: string | null
   amount: runtime.Decimal | null
   interestRate: runtime.Decimal | null
   lateRate: runtime.Decimal | null
@@ -58,7 +57,6 @@ export type OperationMinAggregateOutputType = {
 export type OperationMaxAggregateOutputType = {
   id: string | null
   creditLineId: string | null
-  productId: string | null
   amount: runtime.Decimal | null
   interestRate: runtime.Decimal | null
   lateRate: runtime.Decimal | null
@@ -73,7 +71,6 @@ export type OperationMaxAggregateOutputType = {
 export type OperationCountAggregateOutputType = {
   id: number
   creditLineId: number
-  productId: number
   amount: number
   interestRate: number
   lateRate: number
@@ -104,7 +101,6 @@ export type OperationSumAggregateInputType = {
 export type OperationMinAggregateInputType = {
   id?: true
   creditLineId?: true
-  productId?: true
   amount?: true
   interestRate?: true
   lateRate?: true
@@ -119,7 +115,6 @@ export type OperationMinAggregateInputType = {
 export type OperationMaxAggregateInputType = {
   id?: true
   creditLineId?: true
-  productId?: true
   amount?: true
   interestRate?: true
   lateRate?: true
@@ -134,7 +129,6 @@ export type OperationMaxAggregateInputType = {
 export type OperationCountAggregateInputType = {
   id?: true
   creditLineId?: true
-  productId?: true
   amount?: true
   interestRate?: true
   lateRate?: true
@@ -236,7 +230,6 @@ export type OperationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type OperationGroupByOutputType = {
   id: string
   creditLineId: string
-  productId: string
   amount: runtime.Decimal
   interestRate: runtime.Decimal
   lateRate: runtime.Decimal
@@ -274,7 +267,6 @@ export type OperationWhereInput = {
   NOT?: Prisma.OperationWhereInput | Prisma.OperationWhereInput[]
   id?: Prisma.StringFilter<"Operation"> | string
   creditLineId?: Prisma.StringFilter<"Operation"> | string
-  productId?: Prisma.StringFilter<"Operation"> | string
   amount?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -285,14 +277,13 @@ export type OperationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Operation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Operation"> | Date | string
   creditLine?: Prisma.XOR<Prisma.CreditLineScalarRelationFilter, Prisma.CreditLineWhereInput>
-  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   installments?: Prisma.InstallmentListRelationFilter
+  operationProducts?: Prisma.OperationProductListRelationFilter
 }
 
 export type OperationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   creditLineId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
   lateRate?: Prisma.SortOrder
@@ -303,8 +294,8 @@ export type OperationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   creditLine?: Prisma.CreditLineOrderByWithRelationInput
-  product?: Prisma.ProductOrderByWithRelationInput
   installments?: Prisma.InstallmentOrderByRelationAggregateInput
+  operationProducts?: Prisma.OperationProductOrderByRelationAggregateInput
 }
 
 export type OperationWhereUniqueInput = Prisma.AtLeast<{
@@ -313,7 +304,6 @@ export type OperationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OperationWhereInput[]
   NOT?: Prisma.OperationWhereInput | Prisma.OperationWhereInput[]
   creditLineId?: Prisma.StringFilter<"Operation"> | string
-  productId?: Prisma.StringFilter<"Operation"> | string
   amount?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -324,14 +314,13 @@ export type OperationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Operation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Operation"> | Date | string
   creditLine?: Prisma.XOR<Prisma.CreditLineScalarRelationFilter, Prisma.CreditLineWhereInput>
-  product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   installments?: Prisma.InstallmentListRelationFilter
+  operationProducts?: Prisma.OperationProductListRelationFilter
 }, "id">
 
 export type OperationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   creditLineId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
   lateRate?: Prisma.SortOrder
@@ -354,7 +343,6 @@ export type OperationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.OperationScalarWhereWithAggregatesInput | Prisma.OperationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Operation"> | string
   creditLineId?: Prisma.StringWithAggregatesFilter<"Operation"> | string
-  productId?: Prisma.StringWithAggregatesFilter<"Operation"> | string
   amount?: Prisma.DecimalWithAggregatesFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalWithAggregatesFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalWithAggregatesFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -378,14 +366,13 @@ export type OperationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   creditLine: Prisma.CreditLineCreateNestedOneWithoutOperationsInput
-  product: Prisma.ProductCreateNestedOneWithoutOperationsInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutOperationInput
+  operationProducts?: Prisma.OperationProductCreateNestedManyWithoutOperationInput
 }
 
 export type OperationUncheckedCreateInput = {
   id?: string
   creditLineId: string
-  productId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -396,6 +383,7 @@ export type OperationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutOperationInput
+  operationProducts?: Prisma.OperationProductUncheckedCreateNestedManyWithoutOperationInput
 }
 
 export type OperationUpdateInput = {
@@ -410,14 +398,13 @@ export type OperationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creditLine?: Prisma.CreditLineUpdateOneRequiredWithoutOperationsNestedInput
-  product?: Prisma.ProductUpdateOneRequiredWithoutOperationsNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutOperationNestedInput
+  operationProducts?: Prisma.OperationProductUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creditLineId?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -428,12 +415,12 @@ export type OperationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutOperationNestedInput
+  operationProducts?: Prisma.OperationProductUncheckedUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationCreateManyInput = {
   id?: string
   creditLineId: string
-  productId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -461,7 +448,6 @@ export type OperationUpdateManyMutationInput = {
 export type OperationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creditLineId?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -486,7 +472,6 @@ export type OperationOrderByRelationAggregateInput = {
 export type OperationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   creditLineId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
   lateRate?: Prisma.SortOrder
@@ -508,7 +493,6 @@ export type OperationAvgOrderByAggregateInput = {
 export type OperationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   creditLineId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
   lateRate?: Prisma.SortOrder
@@ -523,7 +507,6 @@ export type OperationMaxOrderByAggregateInput = {
 export type OperationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   creditLineId?: Prisma.SortOrder
-  productId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   interestRate?: Prisma.SortOrder
   lateRate?: Prisma.SortOrder
@@ -589,54 +572,26 @@ export type OperationUncheckedUpdateManyWithoutCreditLineNestedInput = {
   deleteMany?: Prisma.OperationScalarWhereInput | Prisma.OperationScalarWhereInput[]
 }
 
-export type OperationCreateNestedManyWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.OperationCreateWithoutProductInput, Prisma.OperationUncheckedCreateWithoutProductInput> | Prisma.OperationCreateWithoutProductInput[] | Prisma.OperationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.OperationCreateOrConnectWithoutProductInput | Prisma.OperationCreateOrConnectWithoutProductInput[]
-  createMany?: Prisma.OperationCreateManyProductInputEnvelope
-  connect?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-}
-
-export type OperationUncheckedCreateNestedManyWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.OperationCreateWithoutProductInput, Prisma.OperationUncheckedCreateWithoutProductInput> | Prisma.OperationCreateWithoutProductInput[] | Prisma.OperationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.OperationCreateOrConnectWithoutProductInput | Prisma.OperationCreateOrConnectWithoutProductInput[]
-  createMany?: Prisma.OperationCreateManyProductInputEnvelope
-  connect?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-}
-
-export type OperationUpdateManyWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.OperationCreateWithoutProductInput, Prisma.OperationUncheckedCreateWithoutProductInput> | Prisma.OperationCreateWithoutProductInput[] | Prisma.OperationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.OperationCreateOrConnectWithoutProductInput | Prisma.OperationCreateOrConnectWithoutProductInput[]
-  upsert?: Prisma.OperationUpsertWithWhereUniqueWithoutProductInput | Prisma.OperationUpsertWithWhereUniqueWithoutProductInput[]
-  createMany?: Prisma.OperationCreateManyProductInputEnvelope
-  set?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  disconnect?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  delete?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  connect?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  update?: Prisma.OperationUpdateWithWhereUniqueWithoutProductInput | Prisma.OperationUpdateWithWhereUniqueWithoutProductInput[]
-  updateMany?: Prisma.OperationUpdateManyWithWhereWithoutProductInput | Prisma.OperationUpdateManyWithWhereWithoutProductInput[]
-  deleteMany?: Prisma.OperationScalarWhereInput | Prisma.OperationScalarWhereInput[]
-}
-
-export type OperationUncheckedUpdateManyWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.OperationCreateWithoutProductInput, Prisma.OperationUncheckedCreateWithoutProductInput> | Prisma.OperationCreateWithoutProductInput[] | Prisma.OperationUncheckedCreateWithoutProductInput[]
-  connectOrCreate?: Prisma.OperationCreateOrConnectWithoutProductInput | Prisma.OperationCreateOrConnectWithoutProductInput[]
-  upsert?: Prisma.OperationUpsertWithWhereUniqueWithoutProductInput | Prisma.OperationUpsertWithWhereUniqueWithoutProductInput[]
-  createMany?: Prisma.OperationCreateManyProductInputEnvelope
-  set?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  disconnect?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  delete?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  connect?: Prisma.OperationWhereUniqueInput | Prisma.OperationWhereUniqueInput[]
-  update?: Prisma.OperationUpdateWithWhereUniqueWithoutProductInput | Prisma.OperationUpdateWithWhereUniqueWithoutProductInput[]
-  updateMany?: Prisma.OperationUpdateManyWithWhereWithoutProductInput | Prisma.OperationUpdateManyWithWhereWithoutProductInput[]
-  deleteMany?: Prisma.OperationScalarWhereInput | Prisma.OperationScalarWhereInput[]
-}
-
 export type EnumInstallmentFrequencyFieldUpdateOperationsInput = {
   set?: $Enums.InstallmentFrequency
 }
 
 export type EnumOperationStatusFieldUpdateOperationsInput = {
   set?: $Enums.OperationStatus
+}
+
+export type OperationCreateNestedOneWithoutOperationProductsInput = {
+  create?: Prisma.XOR<Prisma.OperationCreateWithoutOperationProductsInput, Prisma.OperationUncheckedCreateWithoutOperationProductsInput>
+  connectOrCreate?: Prisma.OperationCreateOrConnectWithoutOperationProductsInput
+  connect?: Prisma.OperationWhereUniqueInput
+}
+
+export type OperationUpdateOneRequiredWithoutOperationProductsNestedInput = {
+  create?: Prisma.XOR<Prisma.OperationCreateWithoutOperationProductsInput, Prisma.OperationUncheckedCreateWithoutOperationProductsInput>
+  connectOrCreate?: Prisma.OperationCreateOrConnectWithoutOperationProductsInput
+  upsert?: Prisma.OperationUpsertWithoutOperationProductsInput
+  connect?: Prisma.OperationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OperationUpdateToOneWithWhereWithoutOperationProductsInput, Prisma.OperationUpdateWithoutOperationProductsInput>, Prisma.OperationUncheckedUpdateWithoutOperationProductsInput>
 }
 
 export type OperationCreateNestedOneWithoutInstallmentsInput = {
@@ -664,13 +619,12 @@ export type OperationCreateWithoutCreditLineInput = {
   disbursedAt: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  product: Prisma.ProductCreateNestedOneWithoutOperationsInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutOperationInput
+  operationProducts?: Prisma.OperationProductCreateNestedManyWithoutOperationInput
 }
 
 export type OperationUncheckedCreateWithoutCreditLineInput = {
   id?: string
-  productId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -681,6 +635,7 @@ export type OperationUncheckedCreateWithoutCreditLineInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutOperationInput
+  operationProducts?: Prisma.OperationProductUncheckedCreateNestedManyWithoutOperationInput
 }
 
 export type OperationCreateOrConnectWithoutCreditLineInput = {
@@ -715,7 +670,6 @@ export type OperationScalarWhereInput = {
   NOT?: Prisma.OperationScalarWhereInput | Prisma.OperationScalarWhereInput[]
   id?: Prisma.StringFilter<"Operation"> | string
   creditLineId?: Prisma.StringFilter<"Operation"> | string
-  productId?: Prisma.StringFilter<"Operation"> | string
   amount?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFilter<"Operation"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -727,7 +681,7 @@ export type OperationScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Operation"> | Date | string
 }
 
-export type OperationCreateWithoutProductInput = {
+export type OperationCreateWithoutOperationProductsInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -742,7 +696,7 @@ export type OperationCreateWithoutProductInput = {
   installments?: Prisma.InstallmentCreateNestedManyWithoutOperationInput
 }
 
-export type OperationUncheckedCreateWithoutProductInput = {
+export type OperationUncheckedCreateWithoutOperationProductsInput = {
   id?: string
   creditLineId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -757,30 +711,50 @@ export type OperationUncheckedCreateWithoutProductInput = {
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutOperationInput
 }
 
-export type OperationCreateOrConnectWithoutProductInput = {
+export type OperationCreateOrConnectWithoutOperationProductsInput = {
   where: Prisma.OperationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OperationCreateWithoutProductInput, Prisma.OperationUncheckedCreateWithoutProductInput>
+  create: Prisma.XOR<Prisma.OperationCreateWithoutOperationProductsInput, Prisma.OperationUncheckedCreateWithoutOperationProductsInput>
 }
 
-export type OperationCreateManyProductInputEnvelope = {
-  data: Prisma.OperationCreateManyProductInput | Prisma.OperationCreateManyProductInput[]
-  skipDuplicates?: boolean
+export type OperationUpsertWithoutOperationProductsInput = {
+  update: Prisma.XOR<Prisma.OperationUpdateWithoutOperationProductsInput, Prisma.OperationUncheckedUpdateWithoutOperationProductsInput>
+  create: Prisma.XOR<Prisma.OperationCreateWithoutOperationProductsInput, Prisma.OperationUncheckedCreateWithoutOperationProductsInput>
+  where?: Prisma.OperationWhereInput
 }
 
-export type OperationUpsertWithWhereUniqueWithoutProductInput = {
-  where: Prisma.OperationWhereUniqueInput
-  update: Prisma.XOR<Prisma.OperationUpdateWithoutProductInput, Prisma.OperationUncheckedUpdateWithoutProductInput>
-  create: Prisma.XOR<Prisma.OperationCreateWithoutProductInput, Prisma.OperationUncheckedCreateWithoutProductInput>
+export type OperationUpdateToOneWithWhereWithoutOperationProductsInput = {
+  where?: Prisma.OperationWhereInput
+  data: Prisma.XOR<Prisma.OperationUpdateWithoutOperationProductsInput, Prisma.OperationUncheckedUpdateWithoutOperationProductsInput>
 }
 
-export type OperationUpdateWithWhereUniqueWithoutProductInput = {
-  where: Prisma.OperationWhereUniqueInput
-  data: Prisma.XOR<Prisma.OperationUpdateWithoutProductInput, Prisma.OperationUncheckedUpdateWithoutProductInput>
+export type OperationUpdateWithoutOperationProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  term?: Prisma.IntFieldUpdateOperationsInput | number
+  frequency?: Prisma.EnumInstallmentFrequencyFieldUpdateOperationsInput | $Enums.InstallmentFrequency
+  status?: Prisma.EnumOperationStatusFieldUpdateOperationsInput | $Enums.OperationStatus
+  disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditLine?: Prisma.CreditLineUpdateOneRequiredWithoutOperationsNestedInput
+  installments?: Prisma.InstallmentUpdateManyWithoutOperationNestedInput
 }
 
-export type OperationUpdateManyWithWhereWithoutProductInput = {
-  where: Prisma.OperationScalarWhereInput
-  data: Prisma.XOR<Prisma.OperationUpdateManyMutationInput, Prisma.OperationUncheckedUpdateManyWithoutProductInput>
+export type OperationUncheckedUpdateWithoutOperationProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLineId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  term?: Prisma.IntFieldUpdateOperationsInput | number
+  frequency?: Prisma.EnumInstallmentFrequencyFieldUpdateOperationsInput | $Enums.InstallmentFrequency
+  status?: Prisma.EnumOperationStatusFieldUpdateOperationsInput | $Enums.OperationStatus
+  disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  installments?: Prisma.InstallmentUncheckedUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationCreateWithoutInstallmentsInput = {
@@ -795,13 +769,12 @@ export type OperationCreateWithoutInstallmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   creditLine: Prisma.CreditLineCreateNestedOneWithoutOperationsInput
-  product: Prisma.ProductCreateNestedOneWithoutOperationsInput
+  operationProducts?: Prisma.OperationProductCreateNestedManyWithoutOperationInput
 }
 
 export type OperationUncheckedCreateWithoutInstallmentsInput = {
   id?: string
   creditLineId: string
-  productId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -811,6 +784,7 @@ export type OperationUncheckedCreateWithoutInstallmentsInput = {
   disbursedAt: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  operationProducts?: Prisma.OperationProductUncheckedCreateNestedManyWithoutOperationInput
 }
 
 export type OperationCreateOrConnectWithoutInstallmentsInput = {
@@ -841,13 +815,12 @@ export type OperationUpdateWithoutInstallmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   creditLine?: Prisma.CreditLineUpdateOneRequiredWithoutOperationsNestedInput
-  product?: Prisma.ProductUpdateOneRequiredWithoutOperationsNestedInput
+  operationProducts?: Prisma.OperationProductUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationUncheckedUpdateWithoutInstallmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   creditLineId?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -857,11 +830,11 @@ export type OperationUncheckedUpdateWithoutInstallmentsInput = {
   disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  operationProducts?: Prisma.OperationProductUncheckedUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationCreateManyCreditLineInput = {
   id?: string
-  productId: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -884,13 +857,12 @@ export type OperationUpdateWithoutCreditLineInput = {
   disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUpdateOneRequiredWithoutOperationsNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutOperationNestedInput
+  operationProducts?: Prisma.OperationProductUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationUncheckedUpdateWithoutCreditLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -901,69 +873,11 @@ export type OperationUncheckedUpdateWithoutCreditLineInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutOperationNestedInput
+  operationProducts?: Prisma.OperationProductUncheckedUpdateManyWithoutOperationNestedInput
 }
 
 export type OperationUncheckedUpdateManyWithoutCreditLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  productId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  term?: Prisma.IntFieldUpdateOperationsInput | number
-  frequency?: Prisma.EnumInstallmentFrequencyFieldUpdateOperationsInput | $Enums.InstallmentFrequency
-  status?: Prisma.EnumOperationStatusFieldUpdateOperationsInput | $Enums.OperationStatus
-  disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type OperationCreateManyProductInput = {
-  id?: string
-  creditLineId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  lateRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  term: number
-  frequency: $Enums.InstallmentFrequency
-  status?: $Enums.OperationStatus
-  disbursedAt: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type OperationUpdateWithoutProductInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  term?: Prisma.IntFieldUpdateOperationsInput | number
-  frequency?: Prisma.EnumInstallmentFrequencyFieldUpdateOperationsInput | $Enums.InstallmentFrequency
-  status?: Prisma.EnumOperationStatusFieldUpdateOperationsInput | $Enums.OperationStatus
-  disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  creditLine?: Prisma.CreditLineUpdateOneRequiredWithoutOperationsNestedInput
-  installments?: Prisma.InstallmentUpdateManyWithoutOperationNestedInput
-}
-
-export type OperationUncheckedUpdateWithoutProductInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  creditLineId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  term?: Prisma.IntFieldUpdateOperationsInput | number
-  frequency?: Prisma.EnumInstallmentFrequencyFieldUpdateOperationsInput | $Enums.InstallmentFrequency
-  status?: Prisma.EnumOperationStatusFieldUpdateOperationsInput | $Enums.OperationStatus
-  disbursedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  installments?: Prisma.InstallmentUncheckedUpdateManyWithoutOperationNestedInput
-}
-
-export type OperationUncheckedUpdateManyWithoutProductInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  creditLineId?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   lateRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -982,10 +896,12 @@ export type OperationUncheckedUpdateManyWithoutProductInput = {
 
 export type OperationCountOutputType = {
   installments: number
+  operationProducts: number
 }
 
 export type OperationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   installments?: boolean | OperationCountOutputTypeCountInstallmentsArgs
+  operationProducts?: boolean | OperationCountOutputTypeCountOperationProductsArgs
 }
 
 /**
@@ -1005,11 +921,17 @@ export type OperationCountOutputTypeCountInstallmentsArgs<ExtArgs extends runtim
   where?: Prisma.InstallmentWhereInput
 }
 
+/**
+ * OperationCountOutputType without action
+ */
+export type OperationCountOutputTypeCountOperationProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OperationProductWhereInput
+}
+
 
 export type OperationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   creditLineId?: boolean
-  productId?: boolean
   amount?: boolean
   interestRate?: boolean
   lateRate?: boolean
@@ -1020,15 +942,14 @@ export type OperationSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   creditLine?: boolean | Prisma.CreditLineDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   installments?: boolean | Prisma.Operation$installmentsArgs<ExtArgs>
+  operationProducts?: boolean | Prisma.Operation$operationProductsArgs<ExtArgs>
   _count?: boolean | Prisma.OperationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["operation"]>
 
 export type OperationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   creditLineId?: boolean
-  productId?: boolean
   amount?: boolean
   interestRate?: boolean
   lateRate?: boolean
@@ -1039,13 +960,11 @@ export type OperationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   creditLine?: boolean | Prisma.CreditLineDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["operation"]>
 
 export type OperationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   creditLineId?: boolean
-  productId?: boolean
   amount?: boolean
   interestRate?: boolean
   lateRate?: boolean
@@ -1056,13 +975,11 @@ export type OperationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   creditLine?: boolean | Prisma.CreditLineDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["operation"]>
 
 export type OperationSelectScalar = {
   id?: boolean
   creditLineId?: boolean
-  productId?: boolean
   amount?: boolean
   interestRate?: boolean
   lateRate?: boolean
@@ -1074,33 +991,30 @@ export type OperationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OperationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creditLineId" | "productId" | "amount" | "interestRate" | "lateRate" | "term" | "frequency" | "status" | "disbursedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["operation"]>
+export type OperationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creditLineId" | "amount" | "interestRate" | "lateRate" | "term" | "frequency" | "status" | "disbursedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["operation"]>
 export type OperationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creditLine?: boolean | Prisma.CreditLineDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   installments?: boolean | Prisma.Operation$installmentsArgs<ExtArgs>
+  operationProducts?: boolean | Prisma.Operation$operationProductsArgs<ExtArgs>
   _count?: boolean | Prisma.OperationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OperationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creditLine?: boolean | Prisma.CreditLineDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
 export type OperationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creditLine?: boolean | Prisma.CreditLineDefaultArgs<ExtArgs>
-  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
 
 export type $OperationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Operation"
   objects: {
     creditLine: Prisma.$CreditLinePayload<ExtArgs>
-    product: Prisma.$ProductPayload<ExtArgs>
     installments: Prisma.$InstallmentPayload<ExtArgs>[]
+    operationProducts: Prisma.$OperationProductPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     creditLineId: string
-    productId: string
     amount: runtime.Decimal
     interestRate: runtime.Decimal
     lateRate: runtime.Decimal
@@ -1505,8 +1419,8 @@ readonly fields: OperationFieldRefs;
 export interface Prisma__OperationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   creditLine<T extends Prisma.CreditLineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CreditLineDefaultArgs<ExtArgs>>): Prisma.Prisma__CreditLineClient<runtime.Types.Result.GetResult<Prisma.$CreditLinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   installments<T extends Prisma.Operation$installmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Operation$installmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstallmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  operationProducts<T extends Prisma.Operation$operationProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Operation$operationProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OperationProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1538,7 +1452,6 @@ export interface Prisma__OperationClient<T, Null = never, ExtArgs extends runtim
 export interface OperationFieldRefs {
   readonly id: Prisma.FieldRef<"Operation", 'String'>
   readonly creditLineId: Prisma.FieldRef<"Operation", 'String'>
-  readonly productId: Prisma.FieldRef<"Operation", 'String'>
   readonly amount: Prisma.FieldRef<"Operation", 'Decimal'>
   readonly interestRate: Prisma.FieldRef<"Operation", 'Decimal'>
   readonly lateRate: Prisma.FieldRef<"Operation", 'Decimal'>
@@ -1965,6 +1878,30 @@ export type Operation$installmentsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.InstallmentScalarFieldEnum | Prisma.InstallmentScalarFieldEnum[]
+}
+
+/**
+ * Operation.operationProducts
+ */
+export type Operation$operationProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OperationProduct
+   */
+  select?: Prisma.OperationProductSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OperationProduct
+   */
+  omit?: Prisma.OperationProductOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OperationProductInclude<ExtArgs> | null
+  where?: Prisma.OperationProductWhereInput
+  orderBy?: Prisma.OperationProductOrderByWithRelationInput | Prisma.OperationProductOrderByWithRelationInput[]
+  cursor?: Prisma.OperationProductWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OperationProductScalarFieldEnum | Prisma.OperationProductScalarFieldEnum[]
 }
 
 /**

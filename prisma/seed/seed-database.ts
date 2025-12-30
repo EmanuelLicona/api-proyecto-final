@@ -6,6 +6,11 @@ async function main() {
   try {
     await db.$transaction(
       async (tx) => {
+        await tx.creditLine.deleteMany();
+        await tx.installment.deleteMany();
+        await tx.payment.deleteMany();
+        await tx.product.deleteMany();
+        await tx.operation.deleteMany();
         await tx.user.deleteMany();
 
         const usersList = initialData.users.map((x) => ({
@@ -14,6 +19,9 @@ async function main() {
         }));
 
         await tx.user.createMany({ data: usersList });
+        await tx.creditLine.createMany({ data: initialData.creditLines });
+        await tx.product.createMany({ data: initialData.products });
+        
       },
       {
         maxWait: 5000,
