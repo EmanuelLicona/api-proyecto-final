@@ -1,0 +1,1 @@
+export const INTEREST_RATE_DECIMALS = 4;

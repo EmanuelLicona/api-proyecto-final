@@ -4,9 +4,7 @@ import {
   Post,
   HttpCode,
   HttpStatus,
-  Get,
   UseGuards,
-  Request,
   Patch,
   UploadedFile,
   ParseFilePipe,
@@ -45,13 +43,6 @@ export class AuthController {
   @UseGuards(JwtRefreshAuthGuard)
   async refresh(@CurrentUser() user: JwtPayload) {
     return await this.authService.signInWithRefreshToken(user.userId);
-  }
-
-  @Get('me')
-  @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
-  getAuthProfile(@CurrentUser() user: JwtPayload) {
-    return this.authService.getProfileById(user.userId);
   }
 
   @Patch('update-profile')

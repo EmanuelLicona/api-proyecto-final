@@ -390,7 +390,6 @@ export const ModelName = {
   Operation: 'Operation',
   OperationProduct: 'OperationProduct',
   Installment: 'Installment',
-  InstallmentProduct: 'InstallmentProduct',
   Payment: 'Payment'
 } as const
 
@@ -407,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "creditLine" | "product" | "operation" | "operationProduct" | "installment" | "installmentProduct" | "payment"
+    modelProps: "user" | "creditLine" | "product" | "operation" | "operationProduct" | "installment" | "payment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -855,80 +854,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    InstallmentProduct: {
-      payload: Prisma.$InstallmentProductPayload<ExtArgs>
-      fields: Prisma.InstallmentProductFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.InstallmentProductFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.InstallmentProductFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>
-        }
-        findFirst: {
-          args: Prisma.InstallmentProductFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.InstallmentProductFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>
-        }
-        findMany: {
-          args: Prisma.InstallmentProductFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>[]
-        }
-        create: {
-          args: Prisma.InstallmentProductCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>
-        }
-        createMany: {
-          args: Prisma.InstallmentProductCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.InstallmentProductCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>[]
-        }
-        delete: {
-          args: Prisma.InstallmentProductDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>
-        }
-        update: {
-          args: Prisma.InstallmentProductUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>
-        }
-        deleteMany: {
-          args: Prisma.InstallmentProductDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.InstallmentProductUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.InstallmentProductUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>[]
-        }
-        upsert: {
-          args: Prisma.InstallmentProductUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstallmentProductPayload>
-        }
-        aggregate: {
-          args: Prisma.InstallmentProductAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateInstallmentProduct>
-        }
-        groupBy: {
-          args: Prisma.InstallmentProductGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.InstallmentProductGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.InstallmentProductCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.InstallmentProductCountAggregateOutputType> | number
-        }
-      }
-    }
     Payment: {
       payload: Prisma.$PaymentPayload<ExtArgs>
       fields: Prisma.PaymentFieldRefs
@@ -1133,16 +1058,6 @@ export const InstallmentScalarFieldEnum = {
 } as const
 
 export type InstallmentScalarFieldEnum = (typeof InstallmentScalarFieldEnum)[keyof typeof InstallmentScalarFieldEnum]
-
-
-export const InstallmentProductScalarFieldEnum = {
-  installmentId: 'installmentId',
-  productId: 'productId',
-  principal: 'principal',
-  interest: 'interest'
-} as const
-
-export type InstallmentProductScalarFieldEnum = (typeof InstallmentProductScalarFieldEnum)[keyof typeof InstallmentProductScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {
@@ -1470,7 +1385,6 @@ export type GlobalOmitConfig = {
   operation?: Prisma.OperationOmit
   operationProduct?: Prisma.OperationProductOmit
   installment?: Prisma.InstallmentOmit
-  installmentProduct?: Prisma.InstallmentProductOmit
   payment?: Prisma.PaymentOmit
 }
 

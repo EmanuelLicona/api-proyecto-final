@@ -273,7 +273,6 @@ export type ProductWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   operationProducts?: Prisma.OperationProductListRelationFilter
-  installmentProducts?: Prisma.InstallmentProductListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -289,7 +288,6 @@ export type ProductOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   operationProducts?: Prisma.OperationProductOrderByRelationAggregateInput
-  installmentProducts?: Prisma.InstallmentProductOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -308,7 +306,6 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   operationProducts?: Prisma.OperationProductListRelationFilter
-  installmentProducts?: Prisma.InstallmentProductListRelationFilter
 }, "id">
 
 export type ProductOrderByWithAggregationInput = {
@@ -360,7 +357,6 @@ export type ProductCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   operationProducts?: Prisma.OperationProductCreateNestedManyWithoutProductInput
-  installmentProducts?: Prisma.InstallmentProductCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -376,7 +372,6 @@ export type ProductUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   operationProducts?: Prisma.OperationProductUncheckedCreateNestedManyWithoutProductInput
-  installmentProducts?: Prisma.InstallmentProductUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -392,7 +387,6 @@ export type ProductUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   operationProducts?: Prisma.OperationProductUpdateManyWithoutProductNestedInput
-  installmentProducts?: Prisma.InstallmentProductUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -408,7 +402,6 @@ export type ProductUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   operationProducts?: Prisma.OperationProductUncheckedUpdateManyWithoutProductNestedInput
-  installmentProducts?: Prisma.InstallmentProductUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -538,20 +531,6 @@ export type ProductUpdateOneRequiredWithoutOperationProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutOperationProductsInput, Prisma.ProductUpdateWithoutOperationProductsInput>, Prisma.ProductUncheckedUpdateWithoutOperationProductsInput>
 }
 
-export type ProductCreateNestedOneWithoutInstallmentProductsInput = {
-  create?: Prisma.XOR<Prisma.ProductCreateWithoutInstallmentProductsInput, Prisma.ProductUncheckedCreateWithoutInstallmentProductsInput>
-  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutInstallmentProductsInput
-  connect?: Prisma.ProductWhereUniqueInput
-}
-
-export type ProductUpdateOneRequiredWithoutInstallmentProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.ProductCreateWithoutInstallmentProductsInput, Prisma.ProductUncheckedCreateWithoutInstallmentProductsInput>
-  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutInstallmentProductsInput
-  upsert?: Prisma.ProductUpsertWithoutInstallmentProductsInput
-  connect?: Prisma.ProductWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutInstallmentProductsInput, Prisma.ProductUpdateWithoutInstallmentProductsInput>, Prisma.ProductUncheckedUpdateWithoutInstallmentProductsInput>
-}
-
 export type ProductCreateWithoutOperationProductsInput = {
   id?: string
   name: string
@@ -564,7 +543,6 @@ export type ProductCreateWithoutOperationProductsInput = {
   status?: $Enums.ProductStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  installmentProducts?: Prisma.InstallmentProductCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutOperationProductsInput = {
@@ -579,7 +557,6 @@ export type ProductUncheckedCreateWithoutOperationProductsInput = {
   status?: $Enums.ProductStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  installmentProducts?: Prisma.InstallmentProductUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutOperationProductsInput = {
@@ -610,7 +587,6 @@ export type ProductUpdateWithoutOperationProductsInput = {
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  installmentProducts?: Prisma.InstallmentProductUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutOperationProductsInput = {
@@ -625,83 +601,6 @@ export type ProductUncheckedUpdateWithoutOperationProductsInput = {
   status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  installmentProducts?: Prisma.InstallmentProductUncheckedUpdateManyWithoutProductNestedInput
-}
-
-export type ProductCreateWithoutInstallmentProductsInput = {
-  id?: string
-  name: string
-  description?: string | null
-  imageUrl?: string | null
-  brand: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  baseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  maxTerm: number
-  status?: $Enums.ProductStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  operationProducts?: Prisma.OperationProductCreateNestedManyWithoutProductInput
-}
-
-export type ProductUncheckedCreateWithoutInstallmentProductsInput = {
-  id?: string
-  name: string
-  description?: string | null
-  imageUrl?: string | null
-  brand: string
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  baseRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  maxTerm: number
-  status?: $Enums.ProductStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  operationProducts?: Prisma.OperationProductUncheckedCreateNestedManyWithoutProductInput
-}
-
-export type ProductCreateOrConnectWithoutInstallmentProductsInput = {
-  where: Prisma.ProductWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProductCreateWithoutInstallmentProductsInput, Prisma.ProductUncheckedCreateWithoutInstallmentProductsInput>
-}
-
-export type ProductUpsertWithoutInstallmentProductsInput = {
-  update: Prisma.XOR<Prisma.ProductUpdateWithoutInstallmentProductsInput, Prisma.ProductUncheckedUpdateWithoutInstallmentProductsInput>
-  create: Prisma.XOR<Prisma.ProductCreateWithoutInstallmentProductsInput, Prisma.ProductUncheckedCreateWithoutInstallmentProductsInput>
-  where?: Prisma.ProductWhereInput
-}
-
-export type ProductUpdateToOneWithWhereWithoutInstallmentProductsInput = {
-  where?: Prisma.ProductWhereInput
-  data: Prisma.XOR<Prisma.ProductUpdateWithoutInstallmentProductsInput, Prisma.ProductUncheckedUpdateWithoutInstallmentProductsInput>
-}
-
-export type ProductUpdateWithoutInstallmentProductsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  baseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  maxTerm?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  operationProducts?: Prisma.OperationProductUpdateManyWithoutProductNestedInput
-}
-
-export type ProductUncheckedUpdateWithoutInstallmentProductsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  baseRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  maxTerm?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  operationProducts?: Prisma.OperationProductUncheckedUpdateManyWithoutProductNestedInput
 }
 
 
@@ -711,12 +610,10 @@ export type ProductUncheckedUpdateWithoutInstallmentProductsInput = {
 
 export type ProductCountOutputType = {
   operationProducts: number
-  installmentProducts: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   operationProducts?: boolean | ProductCountOutputTypeCountOperationProductsArgs
-  installmentProducts?: boolean | ProductCountOutputTypeCountInstallmentProductsArgs
 }
 
 /**
@@ -736,13 +633,6 @@ export type ProductCountOutputTypeCountOperationProductsArgs<ExtArgs extends run
   where?: Prisma.OperationProductWhereInput
 }
 
-/**
- * ProductCountOutputType without action
- */
-export type ProductCountOutputTypeCountInstallmentProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.InstallmentProductWhereInput
-}
-
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -757,7 +647,6 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   operationProducts?: boolean | Prisma.Product$operationProductsArgs<ExtArgs>
-  installmentProducts?: boolean | Prisma.Product$installmentProductsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -806,7 +695,6 @@ export type ProductSelectScalar = {
 export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "imageUrl" | "brand" | "price" | "baseRate" | "maxTerm" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   operationProducts?: boolean | Prisma.Product$operationProductsArgs<ExtArgs>
-  installmentProducts?: boolean | Prisma.Product$installmentProductsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -816,7 +704,6 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Product"
   objects: {
     operationProducts: Prisma.$OperationProductPayload<ExtArgs>[]
-    installmentProducts: Prisma.$InstallmentProductPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1225,7 +1112,6 @@ readonly fields: ProductFieldRefs;
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   operationProducts<T extends Prisma.Product$operationProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$operationProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OperationProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  installmentProducts<T extends Prisma.Product$installmentProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$installmentProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstallmentProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1675,30 +1561,6 @@ export type Product$operationProductsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.OperationProductScalarFieldEnum | Prisma.OperationProductScalarFieldEnum[]
-}
-
-/**
- * Product.installmentProducts
- */
-export type Product$installmentProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the InstallmentProduct
-   */
-  select?: Prisma.InstallmentProductSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the InstallmentProduct
-   */
-  omit?: Prisma.InstallmentProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.InstallmentProductInclude<ExtArgs> | null
-  where?: Prisma.InstallmentProductWhereInput
-  orderBy?: Prisma.InstallmentProductOrderByWithRelationInput | Prisma.InstallmentProductOrderByWithRelationInput[]
-  cursor?: Prisma.InstallmentProductWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.InstallmentProductScalarFieldEnum | Prisma.InstallmentProductScalarFieldEnum[]
 }
 
 /**

@@ -238,7 +238,7 @@ export type UserWhereInput = {
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  creditLines?: Prisma.CreditLineListRelationFilter
+  creditLine?: Prisma.XOR<Prisma.CreditLineNullableScalarRelationFilter, Prisma.CreditLineWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -254,7 +254,7 @@ export type UserOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  creditLines?: Prisma.CreditLineOrderByRelationAggregateInput
+  creditLine?: Prisma.CreditLineOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -273,7 +273,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  creditLines?: Prisma.CreditLineListRelationFilter
+  creditLine?: Prisma.XOR<Prisma.CreditLineNullableScalarRelationFilter, Prisma.CreditLineWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -325,7 +325,7 @@ export type UserCreateInput = {
   status?: $Enums.UserStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  creditLines?: Prisma.CreditLineCreateNestedManyWithoutUserInput
+  creditLine?: Prisma.CreditLineCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -341,7 +341,7 @@ export type UserUncheckedCreateInput = {
   status?: $Enums.UserStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  creditLines?: Prisma.CreditLineUncheckedCreateNestedManyWithoutUserInput
+  creditLine?: Prisma.CreditLineUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -357,7 +357,7 @@ export type UserUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  creditLines?: Prisma.CreditLineUpdateManyWithoutUserNestedInput
+  creditLine?: Prisma.CreditLineUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -373,7 +373,7 @@ export type UserUncheckedUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  creditLines?: Prisma.CreditLineUncheckedUpdateManyWithoutUserNestedInput
+  creditLine?: Prisma.CreditLineUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -491,21 +491,21 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type UserCreateNestedOneWithoutCreditLinesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCreditLinesInput, Prisma.UserUncheckedCreateWithoutCreditLinesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreditLinesInput
+export type UserCreateNestedOneWithoutCreditLineInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreditLineInput, Prisma.UserUncheckedCreateWithoutCreditLineInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreditLineInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutCreditLinesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCreditLinesInput, Prisma.UserUncheckedCreateWithoutCreditLinesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreditLinesInput
-  upsert?: Prisma.UserUpsertWithoutCreditLinesInput
+export type UserUpdateOneRequiredWithoutCreditLineNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreditLineInput, Prisma.UserUncheckedCreateWithoutCreditLineInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreditLineInput
+  upsert?: Prisma.UserUpsertWithoutCreditLineInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreditLinesInput, Prisma.UserUpdateWithoutCreditLinesInput>, Prisma.UserUncheckedUpdateWithoutCreditLinesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreditLineInput, Prisma.UserUpdateWithoutCreditLineInput>, Prisma.UserUncheckedUpdateWithoutCreditLineInput>
 }
 
-export type UserCreateWithoutCreditLinesInput = {
+export type UserCreateWithoutCreditLineInput = {
   id?: string
   name: string
   email: string
@@ -520,7 +520,7 @@ export type UserCreateWithoutCreditLinesInput = {
   updatedAt?: Date | string
 }
 
-export type UserUncheckedCreateWithoutCreditLinesInput = {
+export type UserUncheckedCreateWithoutCreditLineInput = {
   id?: string
   name: string
   email: string
@@ -535,23 +535,23 @@ export type UserUncheckedCreateWithoutCreditLinesInput = {
   updatedAt?: Date | string
 }
 
-export type UserCreateOrConnectWithoutCreditLinesInput = {
+export type UserCreateOrConnectWithoutCreditLineInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCreditLinesInput, Prisma.UserUncheckedCreateWithoutCreditLinesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreditLineInput, Prisma.UserUncheckedCreateWithoutCreditLineInput>
 }
 
-export type UserUpsertWithoutCreditLinesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCreditLinesInput, Prisma.UserUncheckedUpdateWithoutCreditLinesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCreditLinesInput, Prisma.UserUncheckedCreateWithoutCreditLinesInput>
+export type UserUpsertWithoutCreditLineInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreditLineInput, Prisma.UserUncheckedUpdateWithoutCreditLineInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreditLineInput, Prisma.UserUncheckedCreateWithoutCreditLineInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutCreditLinesInput = {
+export type UserUpdateToOneWithWhereWithoutCreditLineInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCreditLinesInput, Prisma.UserUncheckedUpdateWithoutCreditLinesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreditLineInput, Prisma.UserUncheckedUpdateWithoutCreditLineInput>
 }
 
-export type UserUpdateWithoutCreditLinesInput = {
+export type UserUpdateWithoutCreditLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -566,7 +566,7 @@ export type UserUpdateWithoutCreditLinesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type UserUncheckedUpdateWithoutCreditLinesInput = {
+export type UserUncheckedUpdateWithoutCreditLineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -581,35 +581,6 @@ export type UserUncheckedUpdateWithoutCreditLinesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type UserCountOutputType
- */
-
-export type UserCountOutputType = {
-  creditLines: number
-}
-
-export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creditLines?: boolean | UserCountOutputTypeCountCreditLinesArgs
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserCountOutputType
-   */
-  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCreditLinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CreditLineWhereInput
-}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -625,8 +596,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  creditLines?: boolean | Prisma.User$creditLinesArgs<ExtArgs>
-  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+  creditLine?: boolean | Prisma.User$creditLineArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -676,8 +646,7 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "avatarUrl" | "documentNumber" | "phone" | "role" | "refreshToken" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creditLines?: boolean | Prisma.User$creditLinesArgs<ExtArgs>
-  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+  creditLine?: boolean | Prisma.User$creditLineArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -685,7 +654,7 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    creditLines: Prisma.$CreditLinePayload<ExtArgs>[]
+    creditLine: Prisma.$CreditLinePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1094,7 +1063,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  creditLines<T extends Prisma.User$creditLinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$creditLinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreditLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  creditLine<T extends Prisma.User$creditLineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$creditLineArgs<ExtArgs>>): Prisma.Prisma__CreditLineClient<runtime.Types.Result.GetResult<Prisma.$CreditLinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1524,9 +1493,9 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.creditLines
+ * User.creditLine
  */
-export type User$creditLinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$creditLineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the CreditLine
    */
@@ -1540,11 +1509,6 @@ export type User$creditLinesArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.CreditLineInclude<ExtArgs> | null
   where?: Prisma.CreditLineWhereInput
-  orderBy?: Prisma.CreditLineOrderByWithRelationInput | Prisma.CreditLineOrderByWithRelationInput[]
-  cursor?: Prisma.CreditLineWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CreditLineScalarFieldEnum | Prisma.CreditLineScalarFieldEnum[]
 }
 
 /**

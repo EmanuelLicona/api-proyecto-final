@@ -57,7 +57,6 @@ export const ModelName = {
   Operation: 'Operation',
   OperationProduct: 'OperationProduct',
   Installment: 'Installment',
-  InstallmentProduct: 'InstallmentProduct',
   Payment: 'Payment'
 } as const
 
@@ -168,16 +167,6 @@ export const InstallmentScalarFieldEnum = {
 } as const
 
 export type InstallmentScalarFieldEnum = (typeof InstallmentScalarFieldEnum)[keyof typeof InstallmentScalarFieldEnum]
-
-
-export const InstallmentProductScalarFieldEnum = {
-  installmentId: 'installmentId',
-  productId: 'productId',
-  principal: 'principal',
-  interest: 'interest'
-} as const
-
-export type InstallmentProductScalarFieldEnum = (typeof InstallmentProductScalarFieldEnum)[keyof typeof InstallmentProductScalarFieldEnum]
 
 
 export const PaymentScalarFieldEnum = {

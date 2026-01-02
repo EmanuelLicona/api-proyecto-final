@@ -11,6 +11,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { OperationsModule } from './operations/operations.module';
 import { StorageModule } from './storage/storage.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { StorageModule } from './storage/storage.module';
     UsersModule,
     OperationsModule,
     StorageModule,
+    ProductsModule,
   ],
   providers: [
     {

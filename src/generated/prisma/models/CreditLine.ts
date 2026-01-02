@@ -254,10 +254,10 @@ export type CreditLineOrderByWithRelationInput = {
 
 export type CreditLineWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  userId?: string
   AND?: Prisma.CreditLineWhereInput | Prisma.CreditLineWhereInput[]
   OR?: Prisma.CreditLineWhereInput[]
   NOT?: Prisma.CreditLineWhereInput | Prisma.CreditLineWhereInput[]
-  userId?: Prisma.StringFilter<"CreditLine"> | string
   creditLimit?: Prisma.DecimalFilter<"CreditLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFilter<"CreditLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumCreditLineStatusFilter<"CreditLine"> | $Enums.CreditLineStatus
@@ -265,7 +265,7 @@ export type CreditLineWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CreditLine"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   operations?: Prisma.OperationListRelationFilter
-}, "id">
+}, "id" | "userId">
 
 export type CreditLineOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -302,7 +302,7 @@ export type CreditLineCreateInput = {
   status?: $Enums.CreditLineStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCreditLinesInput
+  user: Prisma.UserCreateNestedOneWithoutCreditLineInput
   operations?: Prisma.OperationCreateNestedManyWithoutCreditLineInput
 }
 
@@ -324,7 +324,7 @@ export type CreditLineUpdateInput = {
   status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCreditLinesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCreditLineNestedInput
   operations?: Prisma.OperationUpdateManyWithoutCreditLineNestedInput
 }
 
@@ -368,14 +368,9 @@ export type CreditLineUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CreditLineListRelationFilter = {
-  every?: Prisma.CreditLineWhereInput
-  some?: Prisma.CreditLineWhereInput
-  none?: Prisma.CreditLineWhereInput
-}
-
-export type CreditLineOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type CreditLineNullableScalarRelationFilter = {
+  is?: Prisma.CreditLineWhereInput | null
+  isNot?: Prisma.CreditLineWhereInput | null
 }
 
 export type CreditLineCountOrderByAggregateInput = {
@@ -423,46 +418,36 @@ export type CreditLineScalarRelationFilter = {
   isNot?: Prisma.CreditLineWhereInput
 }
 
-export type CreditLineCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput> | Prisma.CreditLineCreateWithoutUserInput[] | Prisma.CreditLineUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput | Prisma.CreditLineCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.CreditLineCreateManyUserInputEnvelope
-  connect?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
+export type CreditLineCreateNestedOneWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput
+  connect?: Prisma.CreditLineWhereUniqueInput
 }
 
-export type CreditLineUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput> | Prisma.CreditLineCreateWithoutUserInput[] | Prisma.CreditLineUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput | Prisma.CreditLineCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.CreditLineCreateManyUserInputEnvelope
-  connect?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
+export type CreditLineUncheckedCreateNestedOneWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput
+  connect?: Prisma.CreditLineWhereUniqueInput
 }
 
-export type CreditLineUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput> | Prisma.CreditLineCreateWithoutUserInput[] | Prisma.CreditLineUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput | Prisma.CreditLineCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.CreditLineUpsertWithWhereUniqueWithoutUserInput | Prisma.CreditLineUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.CreditLineCreateManyUserInputEnvelope
-  set?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  disconnect?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  delete?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  connect?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  update?: Prisma.CreditLineUpdateWithWhereUniqueWithoutUserInput | Prisma.CreditLineUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.CreditLineUpdateManyWithWhereWithoutUserInput | Prisma.CreditLineUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.CreditLineScalarWhereInput | Prisma.CreditLineScalarWhereInput[]
+export type CreditLineUpdateOneWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput
+  upsert?: Prisma.CreditLineUpsertWithoutUserInput
+  disconnect?: Prisma.CreditLineWhereInput | boolean
+  delete?: Prisma.CreditLineWhereInput | boolean
+  connect?: Prisma.CreditLineWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CreditLineUpdateToOneWithWhereWithoutUserInput, Prisma.CreditLineUpdateWithoutUserInput>, Prisma.CreditLineUncheckedUpdateWithoutUserInput>
 }
 
-export type CreditLineUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput> | Prisma.CreditLineCreateWithoutUserInput[] | Prisma.CreditLineUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput | Prisma.CreditLineCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.CreditLineUpsertWithWhereUniqueWithoutUserInput | Prisma.CreditLineUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.CreditLineCreateManyUserInputEnvelope
-  set?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  disconnect?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  delete?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  connect?: Prisma.CreditLineWhereUniqueInput | Prisma.CreditLineWhereUniqueInput[]
-  update?: Prisma.CreditLineUpdateWithWhereUniqueWithoutUserInput | Prisma.CreditLineUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.CreditLineUpdateManyWithWhereWithoutUserInput | Prisma.CreditLineUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.CreditLineScalarWhereInput | Prisma.CreditLineScalarWhereInput[]
+export type CreditLineUncheckedUpdateOneWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.CreditLineCreateOrConnectWithoutUserInput
+  upsert?: Prisma.CreditLineUpsertWithoutUserInput
+  disconnect?: Prisma.CreditLineWhereInput | boolean
+  delete?: Prisma.CreditLineWhereInput | boolean
+  connect?: Prisma.CreditLineWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CreditLineUpdateToOneWithWhereWithoutUserInput, Prisma.CreditLineUpdateWithoutUserInput>, Prisma.CreditLineUncheckedUpdateWithoutUserInput>
 }
 
 export type DecimalFieldUpdateOperationsInput = {
@@ -516,38 +501,35 @@ export type CreditLineCreateOrConnectWithoutUserInput = {
   create: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput>
 }
 
-export type CreditLineCreateManyUserInputEnvelope = {
-  data: Prisma.CreditLineCreateManyUserInput | Prisma.CreditLineCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type CreditLineUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.CreditLineWhereUniqueInput
+export type CreditLineUpsertWithoutUserInput = {
   update: Prisma.XOR<Prisma.CreditLineUpdateWithoutUserInput, Prisma.CreditLineUncheckedUpdateWithoutUserInput>
   create: Prisma.XOR<Prisma.CreditLineCreateWithoutUserInput, Prisma.CreditLineUncheckedCreateWithoutUserInput>
+  where?: Prisma.CreditLineWhereInput
 }
 
-export type CreditLineUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.CreditLineWhereUniqueInput
+export type CreditLineUpdateToOneWithWhereWithoutUserInput = {
+  where?: Prisma.CreditLineWhereInput
   data: Prisma.XOR<Prisma.CreditLineUpdateWithoutUserInput, Prisma.CreditLineUncheckedUpdateWithoutUserInput>
 }
 
-export type CreditLineUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.CreditLineScalarWhereInput
-  data: Prisma.XOR<Prisma.CreditLineUpdateManyMutationInput, Prisma.CreditLineUncheckedUpdateManyWithoutUserInput>
+export type CreditLineUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  operations?: Prisma.OperationUpdateManyWithoutCreditLineNestedInput
 }
 
-export type CreditLineScalarWhereInput = {
-  AND?: Prisma.CreditLineScalarWhereInput | Prisma.CreditLineScalarWhereInput[]
-  OR?: Prisma.CreditLineScalarWhereInput[]
-  NOT?: Prisma.CreditLineScalarWhereInput | Prisma.CreditLineScalarWhereInput[]
-  id?: Prisma.StringFilter<"CreditLine"> | string
-  userId?: Prisma.StringFilter<"CreditLine"> | string
-  creditLimit?: Prisma.DecimalFilter<"CreditLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFilter<"CreditLine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumCreditLineStatusFilter<"CreditLine"> | $Enums.CreditLineStatus
-  createdAt?: Prisma.DateTimeFilter<"CreditLine"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"CreditLine"> | Date | string
+export type CreditLineUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  operations?: Prisma.OperationUncheckedUpdateManyWithoutCreditLineNestedInput
 }
 
 export type CreditLineCreateWithoutOperationsInput = {
@@ -557,7 +539,7 @@ export type CreditLineCreateWithoutOperationsInput = {
   status?: $Enums.CreditLineStatus
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCreditLinesInput
+  user: Prisma.UserCreateNestedOneWithoutCreditLineInput
 }
 
 export type CreditLineUncheckedCreateWithoutOperationsInput = {
@@ -593,50 +575,12 @@ export type CreditLineUpdateWithoutOperationsInput = {
   status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCreditLinesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCreditLineNestedInput
 }
 
 export type CreditLineUncheckedUpdateWithoutOperationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CreditLineCreateManyUserInput = {
-  id?: string
-  creditLimit: runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate: runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: $Enums.CreditLineStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CreditLineUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  operations?: Prisma.OperationUpdateManyWithoutCreditLineNestedInput
-}
-
-export type CreditLineUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  operations?: Prisma.OperationUncheckedUpdateManyWithoutCreditLineNestedInput
-}
-
-export type CreditLineUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   interestRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumCreditLineStatusFieldUpdateOperationsInput | $Enums.CreditLineStatus

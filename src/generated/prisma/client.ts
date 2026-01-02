@@ -68,11 +68,6 @@ export type OperationProduct = Prisma.OperationProductModel
  */
 export type Installment = Prisma.InstallmentModel
 /**
- * Model InstallmentProduct
- * 
- */
-export type InstallmentProduct = Prisma.InstallmentProductModel
-/**
  * Model Payment
  * 
  */
