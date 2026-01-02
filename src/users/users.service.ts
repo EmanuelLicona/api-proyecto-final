@@ -49,7 +49,7 @@ export class UsersService {
 
       limitCredit,
       usedCredit,
-      avaibleCredit: limitCredit - usedCredit,
+      availableCredit: limitCredit - usedCredit,
     };
   }
 
