@@ -70,6 +70,7 @@ export class OperationsService {
     }));
 
     return {
+      total: list.length,
       operations: temp,
     };
   }
