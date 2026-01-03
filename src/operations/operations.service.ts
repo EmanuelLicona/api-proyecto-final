@@ -35,7 +35,7 @@ export class OperationsService {
       },
     });
 
-    return list.map((op) => ({
+    const temp = list.map((op) => ({
       id: op.id,
       amount: +op.amount,
       interestRate: +op.interestRate,
@@ -68,6 +68,10 @@ export class OperationsService {
         status: installment.status,
       })),
     }));
+
+    return {
+      operations: temp,
+    };
   }
 
   async createOperation({
