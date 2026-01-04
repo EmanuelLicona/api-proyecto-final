@@ -12,6 +12,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { OperationsModule } from './operations/operations.module';
 import { StorageModule } from './storage/storage.module';
 import { ProductsModule } from './products/products.module';
+import { PaymentsModule } from './payments/payments.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { InstallmentsModule } from './installments/installments.module';
 
 @Module({
   imports: [
@@ -29,6 +32,8 @@ import { ProductsModule } from './products/products.module';
       rootPath: join(__dirname, '..', '..', 'public'),
     }),
 
+    ScheduleModule.forRoot(),
+
     PrismaModule, // Database
 
     AuthModule,
@@ -36,6 +41,8 @@ import { ProductsModule } from './products/products.module';
     OperationsModule,
     StorageModule,
     ProductsModule,
+    PaymentsModule,
+    InstallmentsModule,
   ],
   providers: [
     {

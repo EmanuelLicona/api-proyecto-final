@@ -10,7 +10,7 @@ import {
 import { OperationsService } from './operations.service';
 import { CreateOperationDto } from './dto/create-operation.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { CurrentJwtPayload } from 'src/auth/decorators/jwt-payload.decorator';
 import { type JwtPayload } from 'src/auth/interfaces/jwt-payload.interface';
 
 @Controller('operations')
@@ -26,7 +26,7 @@ export class OperationsController {
 
   @Get('list')
   @HttpCode(HttpStatus.OK)
-  async getOperationListByUser(@CurrentUser() { userId }: JwtPayload) {
+  async getOperationListByUser(@CurrentJwtPayload() { userId }: JwtPayload) {
     return await this.operationsService.getOperatiosByUser(userId);
   }
 }

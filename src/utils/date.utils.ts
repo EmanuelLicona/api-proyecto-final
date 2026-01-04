@@ -1,4 +1,5 @@
 import { TIMEZONE } from 'src/constants/date';
+import { differenceInCalendarDays } from 'date-fns';
 
 export class DateUtils {
   // Convertir fecha local (asumiendo que está en TIMEZONE) a UTC
@@ -31,10 +32,9 @@ export class DateUtils {
     return new Date(dateString);
   }
 
-  // Días entre dos fechas
-  static getDaysBetween(date1: Date, date2: Date): number {
-    const diff = Math.abs(date2.getTime() - date1.getTime());
-    return Math.floor(diff / (1000 * 60 * 60 * 24));
+  // Días entre dos fechas UTC
+  static daysBetween(date1: Date, date2: Date): number {
+    return differenceInCalendarDays(date1, date2);
   }
 
   // Inicio del día en UTC
@@ -58,7 +58,7 @@ export class DateUtils {
     return DateUtils.toUTC(local);
   }
 
-  // Fin del día en timezone local
+  // Fin del día en timezone local, recibe fecha UTC, devuelve final del dia hn pero en utc
   static endOfDayLocal(date: Date, timezone: string = TIMEZONE): Date {
     const local = DateUtils.fromUTC(date, timezone);
     local.setHours(23, 59, 59, 999);

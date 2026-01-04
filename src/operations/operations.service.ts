@@ -43,6 +43,11 @@ export class OperationsService {
       totalOperationAmount: NumberUtil.round(
         +op.amount.mul(op.interestRate).plus(op.amount),
       ),
+      paidAmount: NumberUtil.round(
+        op.installments
+          .filter((item) => item.status === 'PAID')
+          .reduce((acc, i) => acc + +i.amount, 0),
+      ),
       term: op.term,
       frequency: op.frequency,
       disbursedAt: op.disbursedAt,
@@ -58,6 +63,7 @@ export class OperationsService {
         imageUrl: opProduct.product.imageUrl,
       })),
       installments: op.installments.map((installment) => ({
+        id: installment.id,
         number: installment.number,
         dueDate: installment.dueDate,
         interest: +installment.interest,

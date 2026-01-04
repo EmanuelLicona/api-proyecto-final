@@ -50,6 +50,7 @@ enum InstallmentStatus {
   PENDING
   PAID
   LATE
+  INACTIVE
 }
 
 enum PaymentMethod {
@@ -169,7 +170,7 @@ model Installment {
   amount       Decimal  @db.Decimal(14, 4) // total de la cuota (suma de productos)
   principal    Decimal  @db.Decimal(14, 4) // amortización de capital
   interest     Decimal  @db.Decimal(14, 4) // interés
-  lateInterest Decimal  @default(0) @db.Decimal(14, 4)
+  lateInterest Decimal  @default(0) @db.Decimal(14, 4) // interés diario por mora
 
   status InstallmentStatus @default(PENDING)
   paidAt DateTime?

@@ -1,12 +1,14 @@
+import Decimal from 'decimal.js';
 import { INTEREST_RATE_DECIMALS } from 'src/constants/precision';
 
 export class NumberUtil {
   static round = (value: number, decimals?: number): number => {
-    if (!Number.isFinite(value)) return value;
+    if (value === null || value === undefined) {
+      throw new Error('Invalid number: value is null or undefined');
+    }
 
-    const d = Math.max(0, decimals ?? INTEREST_RATE_DECIMALS);
-
-    const factor = Math.pow(10, d);
-    return Math.round(value * factor) / factor;
+    const d = decimals ?? INTEREST_RATE_DECIMALS;
+    const decimalValue = new Decimal(value);
+    return decimalValue.toDecimalPlaces(d, Decimal.ROUND_HALF_UP).toNumber();
   };
 }

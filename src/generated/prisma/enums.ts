@@ -62,7 +62,8 @@ export type InstallmentFrequency = (typeof InstallmentFrequency)[keyof typeof In
 export const InstallmentStatus = {
   PENDING: 'PENDING',
   PAID: 'PAID',
-  LATE: 'LATE'
+  LATE: 'LATE',
+  INACTIVE: 'INACTIVE'
 } as const
 
 export type InstallmentStatus = (typeof InstallmentStatus)[keyof typeof InstallmentStatus]
