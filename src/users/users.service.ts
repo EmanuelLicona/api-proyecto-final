@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserCreateManyInput } from 'src/generated/prisma/models';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { NumberUtil } from 'src/utils/number.util';
 
 @Injectable()
 export class UsersService {
@@ -36,7 +37,7 @@ export class UsersService {
   }
 
   async getUserProfileCredit(userId: string) {
-    const { user, limitCredit, usedCredit } =
+    const { user, limitCredit, usedCredit, availableCredit } =
       await this.getUserCreditInformation(userId);
 
     return {
@@ -49,7 +50,7 @@ export class UsersService {
 
       limitCredit,
       usedCredit,
-      availableCredit: limitCredit - usedCredit,
+      availableCredit,
     };
   }
 
@@ -70,17 +71,22 @@ export class UsersService {
     if (!userWithCreditLine.creditLine)
       throw new NotFoundException('User has no credit line');
 
-    const creditStats = await this.prisma.operation.aggregate({
-      _sum: {
-        amount: true,
-      },
+    const creditStats = await this.prisma.operation.findMany({
+      select: { amount: true, interestRate: true },
       where: {
         creditLineId: userWithCreditLine.creditLine.id,
         OR: [{ status: 'ACTIVE' }, { status: 'DEFAULTED' }],
       },
     });
 
-    const usedCredit = Number(creditStats._sum.amount ?? 0);
+    const creditStatsSum = NumberUtil.round(
+      creditStats.reduce(
+        (acc, item) => acc + (+item.amount * +item.interestRate + +item.amount),
+        0,
+      ),
+    );
+
+    const usedCredit = Number(creditStatsSum ?? 0);
     const limitCredit = +userWithCreditLine.creditLine.creditLimit;
 
     const user = {
@@ -97,7 +103,7 @@ export class UsersService {
       creditLineId: userWithCreditLine.creditLine.id,
       limitCredit,
       usedCredit,
-      avaibleCredit: limitCredit - usedCredit,
+      availableCredit: NumberUtil.round(limitCredit - usedCredit),
     };
   }
 }
