@@ -52,6 +52,8 @@ export class OperationsService {
       frequency: op.frequency,
       disbursedAt: op.disbursedAt,
       status: op.status,
+      lateInstallments: op.installments.filter((item) => item.status === 'LATE')
+        .length,
       products: op.operationProducts.map((opProduct) => ({
         id: opProduct.product.id,
         name: opProduct.product.name,
